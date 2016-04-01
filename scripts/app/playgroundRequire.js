@@ -8,12 +8,12 @@ require.config({
         'handlebars': 'lib/handlebars-v4.0.2',
 
         // hosted version
-		'augmented': '/augmented/scripts/core/augmented',
-        'augmentedPresentation': '/augmented/scripts/presentation/augmentedPresentation'
+		//'augmented': '/augmented/scripts/core/augmented',
+        //'augmentedPresentation': '/augmented/scripts/presentation/augmentedPresentation'
 
         // local version
-		//'augmented': 'lib/augmented',
-        //'augmentedPresentation': 'lib/augmentedPresentation'
+		'augmented': 'lib/augmented',
+        'augmentedPresentation': 'lib/augmentedPresentation'
 	}
 });
 
