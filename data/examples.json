@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Augmented.Presentation.AutomaticTable",
+        "image": "images/autoTable.png",
+        "title": "Augmented.Presentation: Editable Automatic Table",
+        "desciption": "Demonstrates Augmented.Presentation.AutomaticTable and various functions of the Presentation Module.",
+        "link": "http://www.augmentedjs.com/example/index.html",
+        "patterns": [{ "pName": "Automatic Table"},{ "pName": "Mediator"},{ "pName": "JSON Schema Validation"}]
+    },
+    {
+        "name": "Augmented Top Model",
+        "image": "images/topModel.png",
+        "title": "Augmented: JSON Schema Validation",
+        "desciption": "Demonstrates Augmented JSON Schema Validation.",
+        "link": "http://www.augmentedjs.com/top-model/index.html",
+        "patterns": [{ "pName": "Event Binding"},{ "pName": "Mediator"},{ "pName": "JSON Schema Validation"}]
+    },
+    {
+        "name": "Stickies!",
+        "image": "images/stickies.png",
+        "title": "Stickies!",
+        "desciption": "Demonstrates Augmented Decorator View.",
+        "link": "http://www.augmentedjs.com/decorator/index.html",
+        "patterns": [{ "pName": "MVVM"},{ "pName": "Decorator"},{ "pName": "Two-way Binding"}]
+    }
+]
