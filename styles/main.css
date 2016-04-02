@@ -372,17 +372,40 @@ section#main div#apps div.app a:hover {
 @media only screen
     and (min-device-width: 320px)
     and (max-device-width: 568px) {
+    div.container {
+        width: 97%;
+    }
+    section#main input, section#main textarea {
+        width: 95%;
+    }
 
-  main header h1 {
-    /*margin: 0 0 5px 0;*/
-    font-size: 32pt;
-    padding: 0;
-  }
+    header h1 {
+        font-size: 18pt;
+        max-width: 70%;
+    }
 
-  main header h2 {
-    margin: 0 0 0 0;
-    font-size: 12pt;
-  }
+    header h2 {
+        font-size: 12pt;
+        max-width: 70%;
+    }
+
+    section#main div#apps div.app figure {
+        display: none;
+        visibility: hidden;
+    }
+
+    section#main div#apps div.app {
+        min-height: 250px;
+        height: auto;
+    }
+
+    p {
+        word-wrap: break-word;
+    }
+
+    ul, ol {
+        margin: 1em 0 3em;
+    }
 }
 
 /* iPhone 6 */
@@ -391,11 +414,38 @@ section#main div#apps div.app a:hover {
     and (min-device-width : 375px)
     and (max-device-width : 667px) {
 
-  main header h1 {
-    font-size: 36pt;
-  }
+    section#main input, section#main textarea {
+        width: 95%;
+    }
+    div.container {
+        width: 97%;
+    }
 
-  main header h2 {
-    font-size: 14pt;
-  }
+    header h1 {
+        font-size: 18pt;
+        max-width: 70%;
+    }
+
+    header h2 {
+        font-size: 12pt;
+        max-width: 70%;
+    }
+
+    section#main div#apps div.app figure {
+        display: none;
+        visibility: hidden;
+    }
+
+    section#main div#apps div.app {
+        min-height: 250px;
+        height: auto;
+    }
+
+    p {
+        word-wrap: break-word;
+    }
+
+    ul, ol {
+        margin: 1em 0 3em;
+    }
 }
