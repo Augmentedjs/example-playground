@@ -22,5 +22,13 @@
         "desciption": "Demonstrates Augmented Decorator View.",
         "link": "http://www.augmentedjs.com/decorator/index.html",
         "patterns": [{ "pName": "MVVM"},{ "pName": "Decorator"},{ "pName": "Two-way Binding"}]
+    },
+    {
+        "name": "Hello",
+        "image": "images/dataPush.png",
+        "title": "Hello",
+        "desciption": "Demonstrates Augmented Decorator View Data Push.",
+        "link": "http://www.augmentedjs.com/data-push/index.html",
+        "patterns": [{ "pName": "MVVM"},{ "pName": "Decorator"},{ "pName": "Two-way Binding"}]
     }
 ]
