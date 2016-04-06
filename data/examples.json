@@ -30,5 +30,13 @@
         "desciption": "Demonstrates Augmented Decorator View Data Push.",
         "link": "http://www.augmentedjs.com/data-push/index.html",
         "patterns": [{ "pName": "MVVM"},{ "pName": "Decorator"},{ "pName": "Two-way Binding"}]
+    },
+    {
+        "name": "Visual Mediator",
+        "image": "images/mediator.png",
+        "title": "Visual Mediator",
+        "desciption": "Demonstrates Mediator View.",
+        "link": "http://www.augmentedjs.com/mediator/index.html",
+        "patterns": [{ "pName": "Mediator"}]
     }
 ]
