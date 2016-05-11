@@ -1,0 +1,18 @@
+{{#each apps}}
+<div class="app">
+    <figure>
+        <img src="{{image}}" alt="{{name}}" \>
+    </figure>
+    <h1>{{title}}</h1>
+    <p>{{desciption}}</p>
+        <ul>
+            {{#each patterns}}
+            <li>{{pName}}</li>
+            {{/each}}
+        </ul>
+    </p>
+    <p class="try">
+        <a href="{{link}}">Try it out!</a>
+    </p>
+</div>
+{{/each}}

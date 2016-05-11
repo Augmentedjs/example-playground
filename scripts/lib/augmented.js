@@ -96,7 +96,7 @@
      * @private
      * @memberof Augmented
      */
-    var $ = Augmented.$ = Backbone.$; // Does $ exist?
+    Augmented.$ = (Backbone.$) ? Backbone.$ : $; // Does $ exist?
 
     /**
      * Augmented.Configuration - a set of configuration properties for the framework
@@ -260,6 +260,12 @@
         return Augmented.isFunction(value) ? value.call(object) : value;
     };
 
+    // Polyfill for ES6 function
+    if (!Number.isInteger) {
+        Number.isInteger = function(value) {
+            return typeof value === "number" && isFinite(value) && Math.floor(value) === value;
+        };
+    }
 
     if (!Array.prototype.includes) {
         /**
@@ -312,6 +318,23 @@
     };
 
     /**
+     * exec method - Execute a function by name
+     * @method exec
+     * @param {string} functionName The name of the function
+     * @param {object} context The context to call from
+     * @param (object) args Arguments
+     */
+    Augmented.exec = function(functionName, context /*, args */) {
+        var args = Array.prototype.slice.call(arguments, 2);
+        var namespaces = functionName.split(".");
+        var func = namespaces.pop();
+        for (var i = 0; i < namespaces.length; i++) {
+            context = context[namespaces[i]];
+        }
+        return context[func].apply(context, args);
+    };
+
+    /**
      * Utility Package -
      * Small Utilities
      * @namespace Augmented.Utility
@@ -320,6 +343,22 @@
     Augmented.Utility = {};
 
     Augmented.Utility.classExtend = classExtend;
+
+    /**
+     * Prints an object nicely
+     * @function PrettyPrint
+     * @namespace Augmented.Utility
+     * @param {object} obj The object to print
+     * @param {boolean} spaces Use spaces instead of tabs
+     * @returns {number} number The number of spaces to pad
+     */
+    Augmented.Utility.PrettyPrint = function(obj, spaces, number) {
+        var x = "\t";
+        if (spaces) {
+            x = " ".repeat(number);
+        }
+        return JSON.stringify(obj, null, x);
+    };
 
     /**
      * Sorts an array by key
@@ -613,6 +652,16 @@
             // Authorization
             if (xhr.withCredentials && ajaxObject.user && ajaxObject.password) {
                 xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(ajaxObject.user + ':' + ajaxObject.password));
+            }
+
+            // custom headers
+
+            if (ajaxObject.headers) {
+                var i = 0, keys = Object.keys(ajaxObject.headers), l = keys.length;
+
+                for (i = 0; i < l; i++) {
+                    xhr.setRequestHeader(keys[i], ajaxObject.headers[keys[i]]);
+                }
             }
 
     	    xhr.onload = function() {
@@ -1504,8 +1553,8 @@
     		";": true,
     		"?": true,
     		"&": true
-    	};
-    	var uriTemplateSuffices = {
+    	},
+        uriTemplateSuffices = {
     		"*": true
     	};
 
@@ -1599,8 +1648,9 @@
     			if (showVariables) {
     			    result += varSpec.name + "=";
     			}
-                var j=0, l = value.length;
-    			for (var j = 0; j < l; j++) {
+                var j = 0;
+                l = value.length;
+    			for (j = 0; j < l; j++) {
     			    if (j > 0) {
     				result += varSpec.suffices['*'] ? (separator || ",") : ",";
     				if (varSpec.suffices['*'] && showVariables) {
@@ -1823,9 +1873,9 @@
     	ValidatorContext.prototype.searchSchemas = function (schema, url) {
     	    if (Array.isArray(schema)) {
                 var i = 0, l = schema.length;
-    		for (i = 0; i < l; i++) {
-    		    this.searchSchemas(schema[i], url);
-    		}
+        		for (i = 0; i < l; i++) {
+        		    this.searchSchemas(schema[i], url);
+        		}
     	    } else if (schema && typeof schema === "object") {
     		if (typeof schema.id === "string") {
     		    if (isTrustedUrl(url, schema.id)) {
@@ -2798,8 +2848,8 @@
     		try {
     		    throw err;
     		}
-    		catch(err) {
-    		    this.stack = err.stack || err.stacktrace;
+    		catch(err2) {
+    		    this.stack = err2.stack || err2.stacktrace;
     		}
     	    }
     	}
@@ -3128,6 +3178,36 @@
 	    }
     };
 
+    var schemaGenerator = function(data) {
+        var obj = {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "model",
+            "description": "Generated Schema",
+            "type": "object",
+            "properties": { }
+        };
+
+        var i, d, dkey, p, keys = Object.keys(data), l = keys.length;
+        for (i = 0; i < l; i++) {
+            d = keys[i];
+            for (dkey in d) {
+                if (d.hasOwnProperty(dkey)) {
+                    p = obj.properties[d] = {};
+
+                    var t = (typeof data[d]);
+                    if (t === "object") {
+                        t = (Array.isArray(data[d])) ? "array" : "object";
+                    } else if (t === "number") {
+                        t = (Number.isInteger(data[d])) ? "integer" : "number";
+                    }
+                    p.type = t;
+                    p.description = String(d);
+                }
+            }
+        }
+        return obj;
+    };
+
     /**
      * Augmented.ValidationFramework -
      * The Validation Framework Base Wrapper Class.
@@ -3206,6 +3286,14 @@
     	this.getValidationMessages = function() {
     	    return myValidator.error;
     	};
+
+        this.generateSchema = function(model) {
+            if (model && model instanceof Augmented.Model) {
+                return schemaGenerator(model.toJSON());
+            }
+
+            return schemaGenerator(model);
+        };
     };
 
     Augmented.ValidationFramework = (!Augmented.ValidationFramework) ? new validationFramework() : Augmented.ValidationFramework;
@@ -3314,7 +3402,19 @@
 
             var ret = Augmented.sync(method, model, options);
     	    return ret;
-    	}
+    	},
+        /**
+         * Model.reset - clear and rewrite the model with passed data
+         * @method reset
+         * @memberof Augmented.Model
+         * @param {object} data The data to replace the model with (optional)
+         */
+        reset: function(data) {
+            this.clear();
+            if (data) {
+                this.set(data);
+            }
+        }
     });
 
     // Extend Model with Object base functions
@@ -3719,6 +3819,7 @@
          * @returns {Augmented.View} Returns 'this,' as in, this view context
          */
         initialize: function(options) {
+            this.options = options;
             this.init(options);
             this.render = Augmented.Utility.wrap(this.render, function(render) {
                 this.beforeRender();
@@ -3918,7 +4019,24 @@
      * @extends Backbone.Router
      * @memberof Augmented
      */
-    Augmented.Router = Backbone.Router;
+    Augmented.Router = Backbone.Router.extend({
+        /**
+         * Load a view safely and remove the last view by calling cleanup, then remove
+         * @method loadView
+         * @param {Augmented.View} view The View to load
+         * @memberof Augmented
+         */
+        loadView: function(view) {
+            if (this._view) {
+                if (this._view.cleanup) {
+                    this._view.cleanup();
+                }
+                this._view.remove();
+            }
+    		this._view = view;
+            this._view.render();
+    	}
+    });
 
     Augmented.Object.extend = Augmented.Model.extend = Augmented.Collection.extend = Augmented.Router.extend = Augmented.View.extend = Augmented.History.extend = Augmented.extend;
 
@@ -4349,7 +4467,7 @@
                 Augmented.Utility.extend(this.queue, arguments);
             }
             var args = this.queue;
-            var l = args.length;
+            var l = Object.keys(args).length;//args.length;
             if (l <= 0) {
                 return false;
             }
@@ -4394,7 +4512,15 @@
      * app.start();
      */
     var application = Augmented.Application = function(name) {
-		var metadata;
+		var metadata, routers = [];
+
+        /**
+         * The router property of the view
+         * @property router
+         * @memberof Augmented.Application
+         */
+        this.router = null;
+
         /**
          * The started property of the view
          * @property started
@@ -4422,6 +4548,7 @@
         this.initialize = function() {
 
         };
+
         /** Event for before the startup of the application
          * @method beforeInitialize
          * @memberof Augmented.Application
@@ -4429,6 +4556,7 @@
         this.beforeInitialize = function() {
 
         };
+
         /** Event for after the startup of the application
          * @method afterInitialize
          * @memberof Augmented.Application
@@ -4478,6 +4606,16 @@
 			return metadata.get(key);
 		};
 
+        /** Register a Router - adds routes to the application
+         * @method registerRouter
+         * @memberof Augmented.Application
+         */
+        this.registerRouter = function(router) {
+            if (router && routers) {
+                routers.push(router);
+            }
+        };
+
         /** Event to start the application and history
          * @method start
          * @memberof Augmented.Application
@@ -4489,10 +4627,16 @@
                     Augmented.history.start();
                 }
             };
+            var routerStarter = function() {
+                if (routers && routers.length > 0) {
+
+                }
+            };
             this.started = asyncQueue.process(
                 this.beforeInitialize(),
                 this.initialize(),
                 this.afterInitialize(),
+                //routerStarter(),
                 startCheck()
             );
             if (!this.started) {

@@ -2,10 +2,10 @@ require.config({
 	'baseUrl': 'scripts/',
 
     'paths': {
-		'jquery': 'lib/jquery-2.1.4.min',
+		'jquery': 'lib/jquery.min',
 		'underscore': 'lib/lodash.min',
 		'backbone': 'lib/backbone-min',
-        'handlebars': 'lib/handlebars-v4.0.2',
+        'handlebars': 'lib/handlebars.runtime.min',
 
         // hosted version
 		//'augmented': '/augmented/scripts/core/augmented',
@@ -13,44 +13,28 @@ require.config({
 
         // local version
 		'augmented': 'lib/augmented',
-        'augmentedPresentation': 'lib/augmentedPresentation'
+        'augmentedPresentation': 'lib/augmentedPresentation',
+        'apps': 'app/apps',
+        'data': '../data/data'
 	}
 });
 
-require(['augmented', 'augmentedPresentation', 'handlebars'], function(Augmented, Presentation, Handlebars) {
+require(['augmented', 'augmentedPresentation', 'handlebars', 'data', 'apps'],
+    function(Augmented, Presentation, Handlebars, Data) {
     "use strict";
-    /*var app = new Augmented.Presentation.Application("Playground!");
+    var app = new Augmented.Presentation.Application("Playground!");
     app.registerStylesheet("https://fonts.googleapis.com/css?family=Work+Sans:300,400");
-    app.registerStylesheet("styles/main.css");
-    app.start();*/
-
-    var MyCollection = Augmented.Collection.extend({
-        url: "data/examples.json"
-    });
-
-    var template = Handlebars.compile("{{#each apps}}<div class=\"app\"><figure><img src=\"{{image}}\" alt=\"{{name}}\" \\></figure><h1>{{title}}</h1><p>{{desciption}}</p><ul>{{#each patterns}}<li>{{pName}}</li>{{/each}}</ul></p><p class=\"try\"><a href=\"{{link}}\">Try it out!</a></p></div>{{/each}}");
-
-    var collection = new MyCollection();
+    app.start();
 
     var MainView = Augmented.View.extend({
         el: "#apps",
-        template: template,
-        collection: collection,
+        progressEl: "#progress",
         render: function() {
-            this.el.innerHTML = this.template({ "apps": this.collection.toJSON() });
-        },
-        fetchAndRender: function () {
-            this.collection.fetch({
-                success: function() {
-                    view.render();
-                },
-                error: function(xhr, status) {
-                    view.el.innerText = "Failed to retrieve data! - " + status.statusText;
-                }
-            });
+            Augmented.D.setValue(this.el, Handlebars.templates.apps({ "apps": Data }));
+            Augmented.D.hide(this.progressEl);
         }
     });
 
     var view = new MainView();
-    view.fetchAndRender();
+    view.render();
 });

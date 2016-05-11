@@ -1,5 +1,13 @@
 [
     {
+        "name": "freeForm Design",
+        "image": "images/freeform.png",
+        "title": "freeForm Design - Augmented SPA Designer",
+        "desciption": "A Single Page Application designer built in Augmented.js.  This application can build the structure an source-code for a single page app.",
+        "link": "http://www.augmentedjs.com/freeform/index.html",
+        "patterns": [{ "pName": "Single Page Application"}]
+    },
+    {
         "name": "Augmented.Presentation.AutomaticTable",
         "image": "images/autoTable.png",
         "title": "Augmented.Presentation: Editable Automatic Table",

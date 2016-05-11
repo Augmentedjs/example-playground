@@ -240,8 +240,9 @@ div#logo {
     position: absolute;
     right: 10px;
     top: 7px;
-    background: rgba(0, 0, 0, 0) url("../images/jensen-silo-circle-small.png") no-repeat scroll center center / 50% 50%;
+    background: rgba(0, 0, 0, 0) url('data:image/png;base64,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') no-repeat scroll center center / 50% 50%;
     opacity: 0.85;
+    cursor: pointer;
 }
 
 h2 {
@@ -313,6 +314,7 @@ section#main div#apps {
     margin-bottom: 15px;
     z-index: 1;
 }
+
 section#main div#apps div.app {
     position: relative;
     height: 250px;
@@ -365,6 +367,17 @@ section#main div#apps div.app ul {
 
 section#main div#apps div.app a:hover {
     text-decoration: underline;
+}
+
+
+progress#progress {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 250px;
 }
 
 /* iPhone 5/5s */
