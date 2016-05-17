@@ -23,7 +23,7 @@ require(['augmented', 'augmentedPresentation', 'handlebars', 'data', 'apps'],
     function(Augmented, Presentation, Handlebars, Data) {
     "use strict";
     var app = new Augmented.Presentation.Application("Playground!");
-    app.registerStylesheet("https://fonts.googleapis.com/css?family=Work+Sans:300,400");
+    app.registerStylesheet("https://fonts.googleapis.com/css?family=Roboto:400,300,100");
     app.start();
 
     var MainView = Augmented.View.extend({

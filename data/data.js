@@ -9,6 +9,14 @@ define('data', [], function() {
             "patterns": [{ "pName": "Single Page Application"}]
         },
         {
+            "name": "Jasmine",
+            "image": "images/jasmine.png",
+            "title": "Jasmine Test Suite",
+            "desciption": "The Augmented.js test suite running on Jasmine.",
+            "link": "http://www.augmentedjs.com/jasmine/index.html",
+            "patterns": [{ "pName": "Behavior Driven Development"}, { "pName": "Test Driven Development"}]
+        },
+        {
             "name": "Augmented.Presentation.AutomaticTable",
             "image": "images/autoTable.png",
             "title": "Augmented.Presentation: Editable Automatic Table",

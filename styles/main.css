@@ -8,9 +8,10 @@ body {
   /* See: http://www.informationarchitects.jp/en/100e2r/ */
   line-height: 1.5;
   /* Default value, `normal`, depends on the font */
-  font-family: 'Work Sans', "Arial Nue", "Arial", "Verdana", "Helvetica", sans-serif;
+  font-family: "Roboto", "Arial Nue", "Arial", "Verdana", "Helvetica", sans-serif;
   font-weight: 300;
-  color: black;
+  color: rgba(0, 0, 0, 0.85);
+  background-color: rgb(250, 250, 250);
 }
 
 /* HTML5 blocks - needed in older browsers */
@@ -309,7 +310,7 @@ section#main div#apps {
     padding: 10px;
     border: 1px solid #cfd8dc;
     color: rgba(0, 0, 0, 0.85);
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     background-color: white;
     margin-bottom: 15px;
     z-index: 1;
