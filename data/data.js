@@ -17,6 +17,14 @@ define('data', [], function() {
             "patterns": [{ "pName": "Behavior Driven Development"}, { "pName": "Test Driven Development"}]
         },
         {
+            "name": "Augmented.Presentation.AutomaticForm",
+            "image": "images/autoForm.png",
+            "title": "Augmented.Presentation: Automatic Form",
+            "desciption": "Demonstrates Augmented.Presentation.AutomaticForm.  Generate a form with validation vi JSON Schema.",
+            "link": "http://www.augmentedjs.com/autoform/index.html",
+            "patterns": [{ "pName": "Automatic Form"},{ "pName": "Mediator"},{ "pName": "JSON Schema Validation"}]
+        },
+        {
             "name": "Augmented.Presentation.AutomaticTable",
             "image": "images/autoTable.png",
             "title": "Augmented.Presentation: Editable Automatic Table",
@@ -54,7 +62,7 @@ define('data', [], function() {
             "title": "Visual Mediator",
             "desciption": "Demonstrates Mediator View.",
             "link": "http://www.augmentedjs.com/mediator/index.html",
-            "patterns": [{ "pName": "Mediator"}]
+            "patterns": [{ "pName": "Mediator"},{ "pName": "Observer"}]
         }
     ];
     return Data;
