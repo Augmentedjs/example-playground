@@ -33,6 +33,14 @@ define('data', [], function() {
             "patterns": [{ "pName": "Automatic Table"},{ "pName": "Mediator"},{ "pName": "JSON Schema Validation"}]
         },
         {
+            "name": "Augmented.Presentation.Spreadsheet",
+            "image": "images/autoTable.png",
+            "title": "Augmented.Presentation: Simple Spreadsheet",
+            "desciption": "Demonstrates Augmented.Presentation.Spreadsheet",
+            "link": "http://www.augmentedjs.com/example/spreadsheet.html",
+            "patterns": [{ "pName": "Automatic Table"},{ "pName": "Mediator"},{ "pName": "JSON Schema Validation"}]
+        },
+        {
             "name": "Augmented Top Model",
             "image": "images/topModel.png",
             "title": "Augmented: JSON Schema Validation",
